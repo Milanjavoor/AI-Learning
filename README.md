@@ -242,3 +242,187 @@ Automated Feature Engineering
 Author
 
 Developed as a machine learning feature selection project to explore data preprocessing, feature engineering, and Sequential Forward Selection using Random Forest classifiers.
+You’re asking for a README for the provided notebook/script. Below is a concise, well-structured README you can include in the project root (README.md). It explains purpose, dataset, setup, usage, file layout, model details, and notes about results and possible improvements.
+
+Formula 1 Winner Prediction (1950–2020)
+Short description
+This project builds a simple binary classifier that predicts whether a driver won a Formula 1 race (winner vs non-winner) using historical data from the "Formula 1 World Championship 1950–2020" Kaggle dataset. It preprocesses and merges drivers, races, results, qualifying and constructor information and trains a 1D CNN (Conv1D) on a small set of numerical features.
+
+Features used
+
+grid: starting grid position
+
+laps: number of laps completed
+
+year: season year
+
+round: round number within the season
+
+age: driver's age at the race (computed from dob and year)
+
+pole position: binary indicator derived from qualifying result (1 if qualified 1st)
+
+Target
+
+winner: binary label where 1 indicates the driver finished first (positionOrder == 1)
+
+Project layout
+
+code.ipynb or train.py: main notebook / script containing the data loading, preprocessing, model training, and evaluation code.
+
+requirements.txt: (recommended) pip dependencies such as pandas, numpy, tensorflow, scikit-learn, matplotlib, seaborn, kagglehub (or instructions to download dataset).
+
+README.md: this file.
+
+data/: optional directory to store downloaded CSV files if not using Kagglehub.
+
+Dependencies
+
+Python 3.8+ recommended
+
+pandas
+
+numpy
+
+scikit-learn
+
+matplotlib
+
+seaborn
+
+tensorflow (tested with 2.x)
+
+kagglehub (optional, for programmatic dataset download) or use Kaggle CLI / download manually
+
+Installation
+
+Create and activate a virtual environment (optional but recommended)
+
+python -m venv venv
+
+source venv/bin/activate (Linux/macOS) or venv\Scripts\activate (Windows)
+
+Install dependencies
+
+pip install -r requirements.txt
+or (minimal)
+
+pip install pandas numpy scikit-learn matplotlib seaborn tensorflow kagglehub
+
+Usage
+
+Download dataset:
+
+Option A (kagglehub): the script uses kagglehub.dataset_download("rohanrao/formula-1-world-championship-1950-2020") to fetch files automatically.
+
+Option B (manual): download the dataset from Kaggle and place CSV files under /kaggle/input/formula-1-world-championship-1950-2020/ or update the paths in the script.
+
+Run the notebook/script:
+
+In Colab or Kaggle kernel: open the notebook and run cells.
+
+Locally: python train.py (adjust paths and remove Kaggle-specific helpers)
+
+What the script does (high level)
+
+Imports CSVs: drivers, results, races, constructors, qualifying.
+
+Cleans data: drops nulls for constructors and qualifying; computes driver age.
+
+Merges tables on raceId and driverId and matches constructors.
+
+Creates binary labels: winner, pole position, podium.
+
+Selects numeric features, scales them with StandardScaler.
+
+Reshapes features to 3D to feed Conv1D: (samples, timesteps/features, 1).
+
+Builds a Sequential Conv1D model with BatchNormalization, MaxPooling, Dropout, Dense layers.
+
+Trains with early stopping on validation loss.
+
+Plots training/validation loss curve and evaluates on test set.
+
+Model architecture
+
+Conv1D(filters=64, kernel_size=2, activation='relu', input_shape=(n_features,1))
+
+BatchNormalization
+
+MaxPooling1D(pool_size=2)
+
+Dropout(0.3)
+
+Conv1D(filters=128, kernel_size=2, activation='relu')
+
+BatchNormalization
+
+Dropout(0.3)
+
+Flatten
+
+Dense(128, activation='relu')
+
+Dropout(0.4)
+
+Dense(64, activation='relu')
+
+Dense(1, activation='sigmoid')
+
+Loss: binary_crossentropy
+
+Optimizer: Adam
+
+Metrics: accuracy
+
+EarlyStopping: monitor='val_loss', patience=5, restore_best_weights=True
+
+Evaluation
+
+Prints model accuracy on test set.
+
+Produces a loss vs epoch plot for training/validation.
+
+You can compute other metrics (precision, recall, F1, confusion matrix) using sklearn.metrics.
+
+Known issues & notes
+
+Using Conv1D on a small number of independent features (6) is atypical. Conv1D assumes local sequential relationships across the time/feature axis, which may not hold here. A Dense MLP or tree-based model (RandomForest, XGBoost) is likely more appropriate.
+
+Class imbalance: winners are extremely rare relative to non-winners. That class imbalance can make accuracy misleading. Consider stratified sampling, class weights, oversampling (SMOTE) or calibrating thresholds.
+
+Missing values: the code drops rows with missing constructor/qualifying which may bias the dataset. Consider more careful imputation or retaining rows where possible.
+
+Age computation: uses the driver's year minus the birth year substring. This assumes dob exists and is formatted "YYYY-MM-DD". Verify correctness.
+
+Feature engineering: add more informative features (constructor strength, driver season standings, circuit characteristics, weather, qualifying gap, pit stops).
+
+Target leakage risk: ensure features available at race start only (e.g., grid, qualifying) are used; avoid using in-race results or future info.
+
+Improvements & experiments to try
+
+Replace Conv1D with a Dense network or tree-based models (RandomForest, XGBoost) and compare performance.
+
+Handle class imbalance with class_weight or resampling techniques.
+
+Add categorical embeddings (constructor, circuit, driver) and use them as features.
+
+Use time-series or sequence models to incorporate a driver's recent form across races.
+
+Use cross-validation and stratified splits to get robust estimates.
+
+Evaluate precision, recall, F1, ROC-AUC and confusion matrix; report class-specific metrics.
+
+Example commands to compute additional metrics (add to script)
+
+from sklearn.metrics import classification_report, confusion_matrix, roc_auc_score
+
+y_pred = (model.predict(x_test) > 0.5).astype(int)
+
+print(classification_report(y_test, y_pred))
+
+print(confusion_matrix(y_test, y_pred))
+
+Credits and dataset
+
+Dataset: "Formula 1 World Championship 1950–2020" by Rohan Rao on Kaggle. Link: https://www.kaggle.com/rohanrao/formula-1-world-championship-1950-2020
