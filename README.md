@@ -23,6 +23,112 @@ By leveraging convolutional layers, the model automatically learns patterns and 
 ## 🛠️ Technologies Used
 
 * Python
+* 🧠 Handwritten Digit Recognition using TensorFlow (MNIST)
+📌 Overview
+
+This project implements a Multi-Layer Perceptron (MLP) using TensorFlow/Keras to classify handwritten digits from the MNIST dataset. The model is trained on grayscale images of handwritten digits (0–9) and learns to predict the correct digit with high accuracy.
+
+The project also visualizes the training process by plotting both accuracy and loss curves over multiple epochs.
+
+🚀 Features
+Loads the MNIST handwritten digit dataset.
+Normalizes image pixel values for faster convergence.
+Builds a fully connected neural network using TensorFlow/Keras.
+Trains the model using the Adam optimizer.
+Evaluates model performance on unseen test data.
+Generates predictions for test images.
+Visualizes training and validation accuracy.
+Visualizes training and validation loss.
+🛠️ Technologies Used
+Python
+TensorFlow / Keras
+NumPy
+Matplotlib
+📂 Dataset
+
+The project uses the built-in MNIST dataset provided by TensorFlow.
+
+Training Images: 60,000
+Testing Images: 10,000
+Image Size: 28 × 28 pixels
+Classes: 10 (Digits 0–9)
+🧠 Model Architecture
+Input Layer (784 neurons)
+        │
+Dense Layer (128 neurons, ReLU)
+        │
+Dense Layer (128 neurons, ReLU)
+        │
+Output Layer (10 neurons)
+⚙️ Training Configuration
+Optimizer: Adam
+Learning Rate: 0.001
+Loss Function: Sparse Categorical Crossentropy
+Metric: Sparse Categorical Accuracy
+Epochs: 33
+Batch Size: 32
+📈 Results
+
+The model achieves high classification accuracy on the MNIST test dataset while demonstrating effective learning through training and validation performance plots.
+
+📊 Output
+
+The project displays:
+
+Sample handwritten digit image
+Actual label of the sample image
+Model summary
+Test accuracy
+Predicted logits for test images
+Accuracy vs Epoch graph
+Loss vs Epoch graph
+📚 Learning Objectives
+
+This project demonstrates:
+
+Data preprocessing
+Image normalization
+Building Sequential models in TensorFlow
+Dense (Fully Connected) Neural Networks
+Model compilation and training
+Performance evaluation
+Prediction generation
+Visualization of learning curves
+▶️ How to Run
+Clone the repository
+git clone https://github.com/your-username/your-repository.git
+Install dependencies
+pip install tensorflow numpy matplotlib
+Run the program
+python main.py
+📌 Future Improvements
+Reshape images and implement a Convolutional Neural Network (CNN) for improved accuracy.
+Add a confusion matrix and classification report.
+Display predicted labels alongside input images.
+Save and reload the trained model.
+Build a simple GUI for real-time handwritten digit prediction.
+👨‍💻 Author
+
+Milan Javoor
+
+Deep Learning • Artificial Intelligence • Quantum Computing • Machine Learning
+
+Note
+
+One small issue in your current code: your model expects flattened input of shape (784,), but you're feeding images of shape (28, 28). Before training, you should reshape the data:
+
+x_train = x_train.reshape(-1, 784) / 255.0
+x_test = x_test.reshape(-1, 784) / 255.0
+
+Also, change:
+
+plt.show
+
+to:
+
+plt.show()
+
+Otherwise, the plots won't be displayed. These fixes will make the project run correctly and align the input with the model architecture.
 * TensorFlow / Keras
 * NumPy
 * Pandas
@@ -242,7 +348,7 @@ Automated Feature Engineering
 Author
 
 Developed as a machine learning feature selection project to explore data preprocessing, feature engineering, and Sequential Forward Selection using Random Forest classifiers.
-You’re asking for a README for the provided notebook/script. Below is a concise, well-structured README you can include in the project root (README.md). It explains purpose, dataset, setup, usage, file layout, model details, and notes about results and possible improvements.
+
 
 Formula 1 Winner Prediction (1950–2020)
 Short description
