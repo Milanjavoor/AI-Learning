@@ -532,3 +532,106 @@ print(confusion_matrix(y_test, y_pred))
 Credits and dataset
 
 Dataset: "Formula 1 World Championship 1950–2020" by Rohan Rao on Kaggle. Link: https://www.kaggle.com/rohanrao/formula-1-world-championship-1950-2020
+📄 Optical Character Recognition (OCR) using Tesseract and OpenCV
+📌 Overview
+
+This project demonstrates Optical Character Recognition (OCR) using Tesseract OCR, OpenCV, and Google Colab. The program allows users to upload an image containing printed text, preprocesses the image to improve readability, and extracts the text using the Tesseract OCR engine.
+
+Image preprocessing techniques such as grayscale conversion, noise removal, and adaptive thresholding are applied to enhance OCR accuracy.
+
+🚀 Features
+Upload images directly in Google Colab.
+Preprocess images for improved text recognition.
+Remove image noise using median filtering.
+Apply adaptive thresholding for better text visibility.
+Extract printed text using Tesseract OCR.
+Display the recognized text in the output console.
+🛠️ Technologies Used
+Python
+OpenCV
+Pytesseract
+NumPy
+Pillow (PIL)
+Google Colab
+⚙️ Workflow
+Image Upload
+      │
+      ▼
+Read Image using OpenCV
+      │
+      ▼
+Convert to Grayscale
+      │
+      ▼
+Noise Removal (Median Blur)
+      │
+      ▼
+Adaptive Thresholding
+      │
+      ▼
+Tesseract OCR
+      │
+      ▼
+Extracted Text Output
+📂 Input
+Image containing printed English text
+Supported formats: JPG, JPEG, PNG
+📤 Output
+
+The program extracts and prints the recognized text from the uploaded image.
+
+Example:
+
+Hello World
+Welcome to Optical Character Recognition.
+🔍 Image Preprocessing Steps
+
+The project improves OCR performance through:
+
+Conversion to grayscale
+Median blur for noise reduction
+Adaptive Gaussian thresholding
+Binary image generation for clearer text recognition
+📚 Learning Objectives
+
+This project demonstrates:
+
+Image preprocessing with OpenCV
+Noise reduction techniques
+Adaptive thresholding
+Optical Character Recognition (OCR)
+Working with Tesseract OCR
+Image upload handling in Google Colab
+Extracting text from images using Python
+▶️ How to Run
+1. Install Dependencies
+pip install pytesseract opencv-python pillow numpy
+2. Install Tesseract OCR
+
+For Google Colab, run:
+
+!apt install tesseract-ocr
+
+For Windows, download and install Tesseract OCR from the official installer, then add it to your system PATH or specify its installation path in your code.
+
+3. Run the Notebook
+
+Execute all cells and upload an image when prompted.
+
+📈 Applications
+Document digitization
+Receipt and invoice scanning
+Automated data entry
+License plate recognition
+Book and article digitization
+Business card text extraction
+Form processing
+Archive digitization
+🔮 Future Improvements
+Support handwritten text recognition.
+Add support for multiple languages.
+Detect and correct image rotation automatically.
+Draw bounding boxes around detected text.
+Export extracted text to PDF or Word documents.
+Build a web application using Flask or Streamlit.
+Add real-time OCR using a webcam.
