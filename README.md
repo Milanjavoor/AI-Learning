@@ -17,7 +17,6 @@ By leveraging convolutional layers, the model automatically learns patterns and 
 * Feature scaling using Min-Max normalization
 * 1D CNN architecture for pattern recognition
 * Binary classification (Attack vs Normal Traffic)
-* Real-time event prediction function
 * Model evaluation with accuracy metrics
 
 ## 🛠️ Technologies Used
