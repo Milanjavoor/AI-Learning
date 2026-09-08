@@ -634,3 +634,131 @@ Draw bounding boxes around detected text.
 Export extracted text to PDF or Word documents.
 Build a web application using Flask or Streamlit.
 Add real-time OCR using a webcam.
+# Formula 1 Race Winner Prediction Using CNN
+
+## Project Overview
+
+This project uses a **1D Convolutional Neural Network (CNN)** to predict whether a Formula 1 driver will win a race based on historical Formula 1 data.
+
+The project uses the **Formula 1 World Championship 1950–2020 dataset** and combines information from race results, races, drivers, qualifying sessions, and constructors.
+
+## Objective
+
+The main objective is to build a binary classification model that predicts:
+
+* `1` → Driver wins the race
+* `0` → Driver does not win the race
+
+## Dataset
+
+The project uses the following datasets:
+
+* `drivers.csv`
+* `results.csv`
+* `races.csv`
+* `qualifying.csv`
+* `constructors.csv`
+
+The datasets are merged using race, driver, and constructor identifiers.
+
+## Features
+
+The model uses the following features:
+
+* `grid` — Starting grid position
+* `laps` — Number of laps completed
+* `year` — Race year
+* `round` — Championship round
+* `age` — Driver's age during the race
+* `pole position` — Whether the driver started from pole position
+
+The target variable is:
+
+```text
+winner
+```
+
+where `winner = 1` when the driver's finishing position is first.
+
+## Data Preprocessing
+
+The project performs the following preprocessing steps:
+
+1. Loads the Formula 1 datasets.
+2. Removes missing values from selected datasets.
+3. Merges race, driver, qualifying, and constructor information.
+4. Calculates driver age from the driver's date of birth.
+5. Creates the binary `winner` target.
+6. Creates a `pole position` feature.
+7. Standardizes the numerical features using `StandardScaler`.
+8. Splits the data into training and testing sets.
+9. Reshapes the data to make it compatible with a 1D CNN.
+
+## Model Architecture
+
+The CNN consists of:
+
+```text
+Input
+  ↓
+Conv1D (64 filters)
+  ↓
+Batch Normalization
+  ↓
+Max Pooling
+  ↓
+Dropout
+  ↓
+Conv1D (128 filters)
+  ↓
+Batch Normalization
+  ↓
+Dropout
+  ↓
+Flatten
+  ↓
+Dense (128)
+  ↓
+Dropout
+  ↓
+Dense (64)
+  ↓
+Dense (1, Sigmoid)
+```
+
+The model uses:
+
+* **Optimizer:** Adam
+* **Loss:** Binary Cross-Entropy
+* **Activation:** ReLU for hidden layers
+* **Output activation:** Sigmoid
+* **Batch size:** 32
+* **Maximum epochs:** 50
+* **Early stopping:** Enabled
+
+## Evaluation
+
+The model is evaluated using the test dataset.
+
+The project records:
+
+* Test loss
+* Test accuracy
+* Predictions on the test dataset
+
+A training and validation **loss curve** is also plotted to observe the model's learning behavior.
+
+## Technologies Used
+
+* Python
+* Pandas
+* NumPy
+* Matplotlib
+* Scikit-learn
+* TensorFlow
+* Keras
+* KaggleHub
+
+## Conclusion
+
+This project demonstrates how historical Formula 1 race data can be processed and used with a deep learning classification model to predict race winners. A 1D CNN is used to learn patterns from the selected numerical features and classify whether a driver wins a race.
