@@ -762,3 +762,120 @@ A training and validation **loss curve** is also plotted to observe the model's 
 ## Conclusion
 
 This project demonstrates how historical Formula 1 race data can be processed and used with a deep learning classification model to predict race winners. A 1D CNN is used to learn patterns from the selected numerical features and classify whether a driver wins a race.
+# LSTM-Based DDoS Attack Detection
+
+## Project Overview
+
+This project implements a Deep Learning based Intrusion Detection System.
+The model is designed to detect DDoS network traffic using an LSTM neural network.
+The dataset used is the CICIDS2017 Friday Afternoon DDoS traffic dataset.
+The project uses Python, Pandas, NumPy, Scikit-learn, and TensorFlow.
+LSTM is used because network traffic can contain sequential patterns.
+The model performs binary classification between normal and attack traffic.
+The dataset contains network-flow features extracted from packet captures.
+Each row represents a network traffic flow with multiple numerical features.
+The target variable is the `Label` column provided by the dataset.
+
+## Dataset
+
+The project uses `Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv`.
+This dataset is part of the CICIDS2017 intrusion detection dataset.
+The dataset contains benign traffic and DDoS attack traffic.
+The original dataset contains numerous network-flow characteristics.
+Examples include packet lengths, flow duration, and packet rates.
+The `Label` column represents the class associated with each network flow.
+The labels are converted into numerical values before training.
+LabelEncoder is used to transform the categorical labels into integers.
+
+## Technologies Used
+
+Python is used as the primary programming language.
+Pandas is used for loading and manipulating the dataset.
+NumPy is used for numerical operations and array manipulation.
+Scikit-learn is used for preprocessing and dataset splitting.
+TensorFlow/Keras is used to construct and train the LSTM model.
+Matplotlib or Seaborn can be added later for visualization.
+The project can be executed directly in Google Colab.
+GPU acceleration can be used to reduce neural network training time.
+
+## Data Preprocessing
+
+The CSV dataset is loaded using Pandas.
+Column names are stripped of unnecessary leading and trailing spaces.
+Infinite values are replaced with NaN values.
+Rows containing missing values are removed from the dataset.
+LabelEncoder converts the original labels into numerical classes.
+The original `Label` column is removed after encoding.
+The encoded `label` column is used as the target variable.
+All input features are scaled using MinMaxScaler.
+Scaling converts feature values into a normalized numerical range.
+Normalization helps the neural network train more effectively.
+
+## Sequence Preparation
+
+The project uses a sequence length of 10 network-flow records.
+Ten consecutive traffic records are combined into one input sequence.
+The LSTM receives these sequences instead of individual rows.
+Each sequence contains multiple network features at every timestep.
+The target corresponds to the traffic record following the sequence.
+Sequences are stored inside NumPy arrays for TensorFlow compatibility.
+This converts the tabular dataset into sequential training data.
+The resulting input shape is `(samples, 10, features)`.
+The sequence structure allows the LSTM to learn temporal traffic patterns.
+
+## Model Architecture
+
+The model is implemented using the Keras Sequential API.
+The first layer is an LSTM containing 64 hidden units.
+The first LSTM returns sequences for processing by the next LSTM layer.
+A Dropout layer with a rate of 0.3 is applied after the first LSTM.
+The second LSTM contains 32 hidden units.
+The second LSTM returns the final sequence representation.
+Another Dropout layer with a rate of 0.3 is applied.
+A Dense layer containing 16 neurons uses ReLU activation.
+The final Dense layer contains one neuron with sigmoid activation.
+The sigmoid output represents the probability of the attack class.
+
+## Training
+
+The model uses the Adam optimizer for gradient-based optimization.
+Binary cross-entropy is used as the training loss function.
+Accuracy is tracked during model training.
+The model is trained for a maximum of 50 epochs.
+A batch size of 64 is used during training.
+Thirty percent of the training data is used for validation.
+EarlyStopping monitors validation loss during training.
+Training stops when validation loss stops improving.
+The best model weights are restored automatically.
+This helps reduce unnecessary training and potential overfitting.
+
+## Evaluation
+
+The trained model is evaluated using the separate test dataset.
+Test loss and classification accuracy are calculated.
+The trained model predicts probabilities for the test sequences.
+A threshold of 0.5 converts probabilities into binary predictions.
+The predictions are compared with the actual test labels.
+A confusion matrix is generated using Scikit-learn.
+The confusion matrix shows correct and incorrect classifications.
+The matrix can be used to analyze false positives and false negatives.
+Additional metrics such as precision, recall, and F1-score can be added.
+These metrics provide a more complete evaluation of intrusion detection.
+
+## Future Improvements
+
+Add precision, recall, F1-score, and ROC-AUC evaluation.
+Plot training and validation accuracy across epochs.
+Plot training and validation loss across epochs.
+Handle class imbalance using class weights or resampling.
+Use a chronological train-test split for more realistic traffic evaluation.
+Save the trained model for later inference.
+Save the MinMaxScaler and LabelEncoder for deployment.
+Create a Tkinter interface for testing individual traffic records.
+Add real-time network traffic monitoring capabilities.
+Extend the system to detect multiple types of network attacks.
+
+## Author
+
+This project demonstrates the use of LSTM networks for cybersecurity.
+It can be used as a beginner-friendly Deep Learning cybersecurity project.
