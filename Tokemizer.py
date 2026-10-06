@@ -99,3 +99,58 @@ class Tokenizer:
             if add_special_tokens:
                 token_ids.append(self.words_to_ids[self.eos_tok])
         return token_ids
+        
+    def decode(self,tokenids,remove_special_tokens):
+
+    # Convert tokenids back into regular texts and removes special tokens
+        tokens=[]
+        for id in tokenids:
+            if id not in self.ids_to_words:
+                continue
+
+            token=self.ids_to_words[id]
+
+            if remove_special_tokens and id in [self.sos_tok,self.eos_tok,self.unknown_tok]:
+                continue
+
+            tokens.append(token)
+# Joining all the tokens with space between them to create a text sequence
+        text=" ".join(tokens)
+# Basic detokenization 
+        text = re.sub(r'\s+([,!?.;:\)\]"])', r'\1', text)
+        text = re.sub(r'([\[\("])\s+', r'\1', text)
+
+        return text
+
+    def return_vocab_size(self):
+        return len(self.words_to_ids)
+
+    
+    def get_pad_token_id(self):
+        return self.words_to_ids[self.pad_tok]
+
+    
+    def get_start_token_id(self):
+        return self.words_to_ids[self.sos_tok]
+
+    def get_unknown_token_id(self):
+        return self.words_to_ids[self.unknown_tok]
+
+    def get_end_token_id(self):
+        return self.words_to_ids[self.eos_tok]
+
+
+    def save_vocabulary(self,filepath):
+        data={
+            "word_to_id":self.words_to_ids,
+            "word_freq":dict(self.word_freq.most_common(1000)),
+            "id_to_word":{str(k):v for k,v in self.ids_to_words.items()}
+        }
+        filepath.parent.mkdir(parents=True,exists_ok=True)
+        with open (filepath,"w",encoding="utf-8") as f:
+            json.dump(data,filepath,ensure_ascii=False,)
+            
+            token_ids=token_ids[:max_len-1]
+            if add_special_tokens:
+                token_ids.append(self.words_to_ids[self.eos_tok])
+        return token_ids
