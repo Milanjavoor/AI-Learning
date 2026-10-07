@@ -150,7 +150,41 @@ class Tokenizer:
         with open (filepath,"w",encoding="utf-8") as f:
             json.dump(data,filepath,ensure_ascii=False,)
             
-            token_ids=token_ids[:max_len-1]
-            if add_special_tokens:
-                token_ids.append(self.words_to_ids[self.eos_tok])
-        return token_ids
+               print("vocabulay saved to",filepath)
+
+    def load_vocabulary(self,filepath):
+        with open (filepath,"r",encoding="utf-8") as f:
+            data=json.load(f)
+        self.words_to_ids=data["words_to_ids"]
+        self.ids_to_words={int(k):v for v,k in data["words_to_ids"].items()}
+
+        self.is_built=True
+
+        print(f"vocabulary loaded from {filepath} with {len(self.words_to_ids)} tokens")
+
+    def status_string(self):
+        status=("built ") if self.is_built else ("Not Built")
+        size=len(self.words_to_ids) if self.is_built else 0
+        print(f"The vocabulary is {status} with size {size}")
+
+if __name__=="__main__":
+
+    texts = [
+            "Hello, how are you today?",
+            "The weather is very nice.",
+            "I love machine learning.",
+            "Neural networks are powerful.",
+        ]
+    tokenizeer=Tokenizer(vocab_size=100)
+    tokenizeer.build_vocabulary(texts)
+
+
+    text="I first saw the girl at the hub . Burdock was so proud of her that he toted her around everywhere , and when he died she started coming alone , tough and smart reminding the world of louella mccoy my sweetheart of old"
+
+    encoded=tokenizeer.encode(text,120)
+
+    print("The original text is",text)
+    print("encoded version",encoded)
+
+    decoded=tokenizeer.decode(encoded,True)
+    print("The decoded version is ",decoded)
