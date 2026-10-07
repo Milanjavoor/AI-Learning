@@ -1,3 +1,13 @@
+"""
+Custom Word-Level Tokenizer from Scratch.
+
+This tokenizer implements:
+- Text normalization
+- Word tokenization
+- Vocabulary building
+- Token-to-ID encoding
+- ID-to-Token decoding
+- Special token handling"""
 import re
 import json 
 from pathlib import Path
