@@ -879,3 +879,29 @@ Extend the system to detect multiple types of network attacks.
 
 This project demonstrates the use of LSTM networks for cybersecurity.
 It can be used as a beginner-friendly Deep Learning cybersecurity project.
+
+
+Custom Word-Level Tokenizer
+This project implements a simple word-level tokenizer from scratch in Python for learning how text is converted into numerical data for NLP and machine-learning models. It normalizes raw text, splits it into words, builds a frequency-based vocabulary, and converts tokens into integer IDs that a model can process. Word frequency counting uses Python’s Counter, whose most_common() method returns items ordered from most to least frequent.
+
+The tokenizer supports four special tokens: <pad> for padding sequences, <sos> for the start of a sequence, <eos> for the end of a sequence, and <unk> for words not present in the vocabulary. During vocabulary construction, it keeps only the most frequent words, up to the configured vocabulary size and minimum-frequency threshold; unseen words are encoded as <unk>.
+
+Main features include:
+
+Lowercasing and whitespace normalization.
+
+Basic separation of punctuation from words using regular expressions.
+
+Word splitting with str.split().
+
+Vocabulary building from a list of training texts.
+
+Token-to-ID encoding and ID-to-token decoding.
+
+Optional <sos> and <eos> tokens.
+
+Sequence truncation using max_length.
+
+Saving and loading vocabularies as JSON files.
+
+The included example builds a tokenizer from four short sentences, encodes "Hello, I love machine learning!" into token IDs, and decodes those IDs back into readable text. This project is educational: production NLP systems commonly use subword methods such as BPE, WordPiece, or SentencePiece because they handle rare words, spelling variations, and out-of-vocabulary terms more effectively than word-level tokenization.
